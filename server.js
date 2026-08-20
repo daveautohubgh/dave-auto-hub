@@ -133,7 +133,7 @@ app.post("/api/paystack/webhook",express.raw({type:"application/json"}),(req,res
   res.sendStatus(200);
 });
 
-app.get("*",(req,res)=>{
+app.get("/{*splat}",(req,res)=>{
   res.sendFile(path.join(__dirname,"public","index.html"));
 });
 app.listen(process.env.PORT||3000,()=>console.log(`Dave Auto Hub running on port ${process.env.PORT||3000}`));
