@@ -3,4 +3,6 @@ async function load(){cars=await fetch("/api/cars").then(r=>r.json());render()}f
 function reserve(id){selected=cars.find(c=>c.id===id);document.getElementById("title").textContent=`Reserve ${selected.name} (${selected.year})`;document.getElementById("modal").classList.remove("hidden")}
 function closeModal(){document.getElementById("modal").classList.add("hidden")}
 document.getElementById("form").onsubmit=async e=>{e.preventDefault();let data={car_id:selected.id,name:name.value,phone:phone.value,email:email.value,message:msg.value,deposit_ghs:deposit.value};let r=await fetch("/api/reservations",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});let x=await r.json();if(x.whatsapp)window.open(x.whatsapp,"_blank");closeModal()};
-q.oninput=render;type.oninput=render;load();
+document.getElementById("q").oninput = render;
+document.getElementById("type").oninput = render;
+load();
