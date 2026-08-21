@@ -14,35 +14,4 @@ if (r.ok) {
   clearForm();
   load();
 } else {
-  const cloudinaryWidget = cloudinary.createUploadWidget(
-  {
-    cloudName: "k6reyjgb",
-    uploadPreset: "dave_auto_hub_cars",
-    sources: ["local", "camera"],
-    multiple: false,
-    clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
-    maxFileSize: 10000000
-  },
-  (error, result) => {
-    if (!error && result && result.event === "success") {
-      document.getElementById("photo").value = result.info.secure_url;
-
-      const preview = document.getElementById("photoPreview");
-      preview.src = result.info.secure_url;
-      preview.style.display = "block";
-
-      document.getElementById("uploadStatus").textContent =
-        "Photo uploaded successfully. Now click Save vehicle.";
-    }
-
-    if (error) {
-      document.getElementById("uploadStatus").textContent =
-        "Photo upload failed. Please try again.";
-      console.error(error);
-    }
-  }
-);
-
-document.getElementById("uploadPhoto").addEventListener("click", () => {
-  cloudinaryWidget.open();
-});
+  
