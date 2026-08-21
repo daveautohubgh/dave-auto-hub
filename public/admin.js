@@ -14,18 +14,14 @@ if (r.ok) {
   clearForm();
   load();
 } else {
-  const error = await r.text();
-  console.error("Save error:", error);
-  alert("Could not save vehicle. Error: " + error);
-}
+  const cloudinaryWidget = cloudinary.createUploadWidget(
   {
     cloudName: "k6reyjgb",
     uploadPreset: "dave_auto_hub_cars",
     sources: ["local", "camera"],
     multiple: false,
     clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
-    maxFileSize: 10000000,
-    folder: "dave-auto-hub/cars"
+    maxFileSize: 10000000
   },
   (error, result) => {
     if (!error && result && result.event === "success") {
