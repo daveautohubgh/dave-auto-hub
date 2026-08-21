@@ -2,8 +2,22 @@ let token=localStorage.getItem("dah_token"),editing=null;const $=id=>document.ge
 function money(n){return new Intl.NumberFormat("en-GH",{style:"currency",currency:"GHS",maximumFractionDigits:0}).format(n)}
 function edit(c){editing=c;$("id").value=c.id;$("name").value=c.name;$("year").value=c.year;$("type").value=c.type;$("price").value=c.price_ghs;$("engine").value=c.engine||"";$("mileage").value=c.mileage||"";$("trans").value=c.transmission||"";$("fuel").value=c.fuel||"";$("status").value=c.status;$("photo").value=c.photo||"";$("desc").value=c.description||"";scrollTo(0,0)}
 function clearForm(){editing=null;$("carForm").reset();$("id").value=""}
-$("carForm").onsubmit=async e=>{e.preventDefault();let c={name:$("name").value,year:$("year").value,type:$("type").value,price_ghs:$("price").value,engine:$("engine").value,mileage:$("mileage").value,transmission:$("trans").value,fuel:$("fuel").value,status:$("status").value,photo:$("photo").value,description:$("desc").value};let url=editing?"/api/cars/"+editing.id:"/api/cars",method=editing?"PUT":"POST";let r=await fetch(url,{method,headers:headers(),body:JSON.stringify(c)});if(r.ok){clearForm();load()}else alert("Could not save vehicle")}
-async function del(id){if(confirm("Delete this vehicle?")){await fetch("/api/cars/"+id,{method:"DELETE",headers:headers()});load()}}function logout(){localStorage.removeItem("dah_token");token=null;show()}show();const cloudinaryWidget = cloudinary.createUploadWidget(
+$("carForm").onsubmit=async e=>{e.preventDefault();let c={name:$("name").value,year:$("year").value,type:$("type").value,price_ghs:$("price").value,engine:$("engine").value,mileage:$("mileage").value,transmission:$("trans").value,fuel:$("fuel").value,status:$("status").value,photo:$("photo").value,description:$("desc").value};let url=editing?"/api/cars/"+editing.id:"/api/cars",method=editing?"PUT":"POST";
+async function del(id){if(confirm("Delete this vehicle?")){await fetch("/api/cars/"+id,{method:"DELETE",headers:headers()});load()}}function logout(){localStorage.removeItem("dah_token");token=null;show()}show();const cloudinaryWidget = cloudinary.createUploadWidgetlet r = await fetch(url, {
+  method,
+  headers: headers(),
+  body: JSON.stringify(c)
+});
+
+if (r.ok) {
+  alert("Vehicle saved successfully!");
+  clearForm();
+  load();
+} else {
+  const error = await r.text();
+  console.error("Save error:", error);
+  alert("Could not save vehicle. Error: " + error);
+}
   {
     cloudName: "k6reyjgb",
     uploadPreset: "dave_auto_hub_cars",
